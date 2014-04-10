@@ -8,8 +8,8 @@ Just start the container and its ready to go!
 * Teamspeak 3 server
 * Adding a Licence file (planned)
 * make complete ts3 conf accessible (planned)
-
-
+* settings are persisted between start/stop of the container, after upgrading(using the run cmd to make a new container)
+not yet. will follow in the future, probably as an change to the run command, not the dockerfile itself.
 #### Usage
 
   Following commands a just examples which should be ok for most installs.
@@ -27,7 +27,7 @@ To get the created Admin secrets use this cmd:
 
 sudo docker logs TS3
 
-you can also specify the container id instead of TS3. this is helpful if you started/stopped several containers with TS3 as name because it then display all logs. (not sure)
+you can also specify the container id instead of TS3.
 
 TODO saving data through links neceassry?
 
