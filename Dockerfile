@@ -9,7 +9,7 @@ FROM ubuntu
 MAINTAINER Alex
 
 ## Set some variables for override.
-#
+# Download Link of TS3 Server
 ENV TEAMSPEAK_URL http://dl.4players.de/ts/releases/3.0.10.3/teamspeak3-server_linux-amd64-3.0.10.3.tar.gz
 
 
@@ -22,7 +22,8 @@ RUN apt-get update && apt-get install -y curl
 # Download TS3 file and extract it into /opt. Also remove the compressed file after extracting.
 RUN cd /opt && curl -sL ${TEAMSPEAK_URL} | tar xz && rm teamspeak3-server_linux-amd64-3.0.10.3.tar.gz
 
-# TODO create symlink for the sqlite db
+# create symlink for the sqlite db
+RUN cd /opt/teamspeak3-server_linux-amd64 && mklink ts3server.sqlitedb "/teamspeak3/ts3server.sqlitedb"
 
 # Use CMD to set some defaults, for example mapping some files/directorys to the injected volume.
 # These can still be overridden on container-creation.
@@ -31,5 +32,5 @@ CMD ["logpath=/teamspeak3/logs/", "licensepath=/teamspeak3/", "inifile=/teamspea
 # Specify an entrypoint because this container should act like a isolated "application" and only serve TS3.
 ENTRYPOINT ["/opt/teamspeak3-server_linux-amd64/ts3server_minimal_runscript.sh"]
 
-# Expose the Standard TS3 port. TODO check override possible?
+# Expose the Standard TS3 port.
 EXPOSE 9987/udp
