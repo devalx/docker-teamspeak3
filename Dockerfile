@@ -19,8 +19,8 @@ VOLUME ["/teamspeak3"]
 # Update app-get index and install curl to download TS3 file.
 RUN apt-get update && apt-get install -y curl
 
-# Download TS3 file and extract it into /opt. Also remove the compressed file after extracting.
-RUN cd /opt && curl -sL ${TEAMSPEAK_URL} | tar xz && rm teamspeak3-server_linux-amd64-3.0.10.3.tar.gz
+# Download TS3 file and extract it into /opt.
+RUN cd /opt && curl -sL ${TEAMSPEAK_URL} | tar xz
 
 # create symlink for the sqlite db
 RUN cd /opt/teamspeak3-server_linux-amd64 && mklink ts3server.sqlitedb "/teamspeak3/ts3server.sqlitedb"
