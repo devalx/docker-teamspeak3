@@ -26,7 +26,6 @@ RUN cd /opt && curl -sL ${TEAMSPEAK_URL} | tar xz && rm teamspeak3-server_linux-
 RUN cd /opt/teamspeak3-server_linux-amd64 && mklink ts3server.sqlitedb "/teamspeak3/ts3server.sqlitedb"
 
 # Use CMD to set some defaults, for example mapping some files/directorys to the injected volume.
-# These can still be overridden on container-creation.
 CMD ["logpath=/teamspeak3/logs/", "licensepath=/teamspeak3/", "inifile=/teamspeak3/ts3server.ini", "query_ip_whitelist=/teamspeak3/query_ip_whitelist.txt", "query_ip_backlist=/teamspeak3/query_ip_blacklist.txt"]
 
 # Specify an entrypoint because this container should act like a isolated "application" and only serve TS3.
