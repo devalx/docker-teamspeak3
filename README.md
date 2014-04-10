@@ -7,19 +7,30 @@ Just start the container and its ready to go!
 * Ubuntu
 * Teamspeak 3 server
 * Adding a Licence file (planned)
+* make complete ts3 conf accessible (planned)
 
 
 #### Usage
 
-Following commands a just examples which should be ok for most installs.
+  Following commands a just examples which should be ok for most installs.
 
-##### Starting
-This starts a docker container in the 
-background (-d) with direct mapping of the TS3 port (-p 9987:9987/udp)
-and sets the name to TS3.
+  * Starting
+    
+    This starts a docker container in the 
+    background (-d) with direct mapping of the TS3 port (-p 9987:9987/udp)
+    and sets the name to TS3.
 
-`sudo docker run --name TS3 -d -p 9987:9987/udp devalx/docker-teamspeak3` 
+    `sudo docker run --name TS3 -d -p 9987:9987/udp devalx/docker-teamspeak3` 
 
-Logs
+##### Logs
+To get the created Admin secrets use this cmd:
 
-Settings
+sudo docker logs TS3
+
+you can also specify the container id instead of TS3. this is helpful if you started/stopped several containers with TS3 as name because it then display all logs. (not sure)
+
+TODO saving data through links neceassry?
+
+##### Settings
+This dockerfile can be customized be specifieing several ENV variables.
+All of these are optional.
