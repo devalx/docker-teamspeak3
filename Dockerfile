@@ -23,7 +23,7 @@ RUN apt-get update && apt-get install -y curl
 RUN cd /opt && curl -sL ${TEAMSPEAK_URL} | tar xz
 
 # create symlink for the sqlite db
-RUN cd /opt/teamspeak3-server_linux-amd64 && ln -s ts3server.sqlitedb "/teamspeak3/ts3server.sqlitedb"
+RUN cd /opt/teamspeak3-server_linux-amd64 && touch "/teamspeak3/ts3server.sqlitedb" && ln -s ts3server.sqlitedb "/teamspeak3/ts3server.sqlitedb"
 
 # TODO symlink for files-dir
 
