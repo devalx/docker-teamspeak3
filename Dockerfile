@@ -22,12 +22,17 @@ RUN apt-get update && apt-get install -y curl
 RUN cd /opt && \
   curl -sL ${TEAMSPEAK_URL} | tar xz
 
-# TODO create symlink for the sqlite db
-#RUN cd /teamspeak3 && touch ts3server.sqlitedb
+# create symlink for the sqlite db
+# if we found a ts3server.sqlitedb create a symlink
+RUN [ -f /teamspeak3/ts3server.sqlitedb ] && \
+   ln -s /teamspeak3/ts3server.sqlitedb /opt/teamspeak3-server_linux-amd64/ts3server.sqlitedb || \
+   echo "ts3ser.sqlitedb not found. Will be created in TS3-Folder.Not backuped!!!"
 #RUN cd /teamspeak3 && ln -s ts3server.sqlitedb /opt/teamspeak3-server_linux-amd64/ts3server.sqlitedb
 
-# TODO symlink for files-dir
-#RUN ln -s /teamspeak3/files /opt/teamspeak3-server_linux-amd64/files
+# symlink for files-dir
+RUN mkdir /teamspeak3/files && \ 
+  chmod 664 /teamspeak3/files && \
+  ln -s /teamspeak3/files /opt/teamspeak3-server_linux-amd64/files
 
 # TODO Use CMD to set some defaults, for example mapping some files/directorys to the injected volume.
 #CMD ["logpath='/teamspeak3/logs/'"]
