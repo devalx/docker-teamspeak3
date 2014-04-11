@@ -1,45 +1,39 @@
 ### docker-teamspeak3
 
-This is a docker container based on ubuntu with installed Teampspeak 3 server.
-Just start the container and its ready to go!
+Ubuntu with TS3 Server.
 
 #### Summary
 * Ubuntu
 * Teamspeak 3 Server
-* Adding a Licence file (planned)
-* make complete ts3 conf accessible (planned)
-* settings are persisted between start/stop of the container, after upgrading(using the run cmd to make a new container)
-not yet. will follow in the future, probably as an change to the run command, not the dockerfile itself.
-#### Usage
+* Some files can be injected to host:
+  * query_ip_whitelist.txt
+  * query_ip_blacklist.txt
+  * logs
+  * files (Not yet)
+  * ts3server.sqlitedb (Not yet)
+  * licence (Maybe; Dont have one)
+  * ts3server.ini (Not tested)
 
-  Following commands a just examples which should be ok for most installs.
-
-  * Starting
+* Usage
+  * Build container (optional)
+    `sudo docker build https://github.com/devalx/docker-teamspeak3.git` 
+  
+  * Create container
     
-    This starts a docker container in the 
-    background (-d) with direct mapping of the TS3 port (-p 9987:9987/udp)
+    This creates and starts a docker container in the 
+    background (-d) with 
+    direct mapping of the TS3 port (-p 9987:9987/udp)
     and sets the name to TS3.
+    {FOLDER} is an absolute path on the host to be mapped by the containers /teamspeak3 folder.
+    Injected files are used from this location, see Summary above.
 
-    `sudo docker run --name TS3 -d -p 9987:9987/udp devalx/docker-teamspeak3` 
-
-#### Backups TODO
-files directory
-licensekey.dat
-query_ip_blacklist.txt
-query_ip_whitelist.txt
-serverkey.dat
-ts3server.ini
-ts3server.sqlitedb
-
-##### Logs
-To get the created Admin secrets use this cmd:
-
-`sudo docker logs TS3`
-
-you can also specify the container id instead of TS3.
-
-TODO saving data through links neceassry?
-
-##### Settings
-This dockerfile can be customized be specifieing several ENV variables.
-All of these are optional.
+    `sudo docker run --name TS3 -d -p 9987:9987/udp -v {FOLDER}:/teamspeak3 devalx/docker-teamspeak3` 
+  * Admin Secret
+  
+    After starting the container you probably want to get the Admin secret with:
+    `sudo docker logs TS3` 
+    
+  * Upgrading
+  
+    Just stop and remove the old container, then start again at "Creating container". You may have to change the image        if its not updating.
+    CAUTION: At the moment this will delete all your configuration and will give you a fresh install. 
