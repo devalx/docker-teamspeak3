@@ -13,7 +13,7 @@ MAINTAINER Alex
 ENV TEAMSPEAK_URL http://dl.4players.de/ts/releases/3.0.10.3/teamspeak3-server_linux-amd64-3.0.10.3.tar.gz
 
 # Inject a Volume for any TS3-Data that needs to be persisted or to be accessible from the host. (e.g. for Backups)
-#VOLUME ["/teamspeak3"]
+VOLUME ["/teamspeak3"]
 
 # Update app-get index and install curl to download TS3 file.
 RUN apt-get update && apt-get install -y curl
@@ -30,8 +30,8 @@ RUN cd /opt && \
 #RUN cd /teamspeak3 && ln -s ts3server.sqlitedb /opt/teamspeak3-server_linux-amd64/ts3server.sqlitedb
 
 # symlink for files-dir
-RUN mkdir -p /teamspeak3/files && \ 
-    chmod 777 /teamspeak3/files 
+#RUN mkdir -p /teamspeak3/files && \ 
+#    chmod 777 /teamspeak3/files 
 #  ln -s /teamspeak3/files /opt/teamspeak3-server_linux-amd64/files
 
 # TODO Use CMD to set some defaults, for example mapping some files/directorys to the injected volume.
