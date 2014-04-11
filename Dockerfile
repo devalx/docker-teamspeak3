@@ -24,15 +24,15 @@ RUN cd /opt && \
 
 # create symlink for the sqlite db
 # if we found a ts3server.sqlitedb create a symlink
-RUN [ -f /teamspeak3/ts3server.sqlitedb ] && \
-   ln -s /teamspeak3/ts3server.sqlitedb /opt/teamspeak3-server_linux-amd64/ts3server.sqlitedb || \
-   echo "ts3ser.sqlitedb not found. Will be created in TS3-Folder.Not backuped!!!"
+#RUN [ -f /teamspeak3/ts3server.sqlitedb ] && \
+#   ln -s /teamspeak3/ts3server.sqlitedb /opt/teamspeak3-server_linux-amd64/ts3server.sqlitedb || \
+#   echo "ts3ser.sqlitedb not found. Will be created in TS3-Folder.Not backuped!!!"
 #RUN cd /teamspeak3 && ln -s ts3server.sqlitedb /opt/teamspeak3-server_linux-amd64/ts3server.sqlitedb
 
 # symlink for files-dir
-RUN mkdir /teamspeak3/files && \ 
-  chmod 664 /teamspeak3/files && \
-  ln -s /teamspeak3/files /opt/teamspeak3-server_linux-amd64/files
+#RUN mkdir /teamspeak3/files && \ 
+#  chmod 777 /teamspeak3/files && \
+#  ln -s /teamspeak3/files /opt/teamspeak3-server_linux-amd64/files
 
 # TODO Use CMD to set some defaults, for example mapping some files/directorys to the injected volume.
 #CMD ["logpath='/teamspeak3/logs/'"]
