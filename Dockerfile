@@ -19,26 +19,12 @@ VOLUME ["/teamspeak3"]
 RUN apt-get update && apt-get install -y curl
 
 # Download TS3 file and extract it into /opt.
-RUN cd /opt && \
-  curl -sL ${TEAMSPEAK_URL} | tar xz
-
-# create symlink for the sqlite db
-# if we found a ts3server.sqlitedb create a symlink
-#RUN [ -f /teamspeak3/ts3server.sqlitedb ] && \
-#   ln -s /teamspeak3/ts3server.sqlitedb /opt/teamspeak3-server_linux-amd64/ts3server.sqlitedb || \
-#   echo "ts3ser.sqlitedb not found. Will be created in TS3-Folder.Not backuped!!!"
-#RUN cd /teamspeak3 && ln -s ts3server.sqlitedb /opt/teamspeak3-server_linux-amd64/ts3server.sqlitedb
-
-# symlink for files-dir
-#RUN mkdir -p /teamspeak3/files && \ 
-#    chmod 777 /teamspeak3/files 
-#  ln -s /teamspeak3/files /opt/teamspeak3-server_linux-amd64/files
+RUN cd /opt && curl -sL ${TEAMSPEAK_URL} | tar xz
 
 # TODO Use CMD to set some defaults, for example mapping some files/directorys to the injected volume.
 #CMD ["logpath='/teamspeak3/logs/'"]
 # licensepath='/teamspeak3/' inifile='/teamspeak3/ts3server.ini' "]
 
-# Specify an entrypoint because this container should act like a isolated "application" and only serve TS3.
 ENTRYPOINT /opt/teamspeak3-server_linux-amd64/ts3server_minimal_runscript.sh \
   query_ip_whitelist="/teamspeak3/query_ip_whitelist.txt" \
   query_ip_backlist="/teamspeak3/query_ip_blacklist.txt" \
