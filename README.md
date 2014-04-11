@@ -16,6 +16,7 @@ Ubuntu with TS3 Server.
 
 * Usage
   * Build container (optional)
+  
     `sudo docker build https://github.com/devalx/docker-teamspeak3.git` 
   
   * Create container
@@ -28,6 +29,7 @@ Ubuntu with TS3 Server.
     Injected files are used from this location, see Summary above.
 
     `sudo docker run --name TS3 -d -p 9987:9987/udp -v {FOLDER}:/teamspeak3 devalx/docker-teamspeak3` 
+    
   * Admin Secret
   
     After starting the container you probably want to get the Admin secret with:
