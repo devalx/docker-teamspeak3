@@ -26,8 +26,9 @@ RUN cd /opt && \
 #RUN cd /teamspeak3 && touch ts3server.sqlitedb
 #RUN cd /teamspeak3 && ln -s ts3server.sqlitedb /opt/teamspeak3-server_linux-amd64/ts3server.sqlitedb
 
-# TODO symlink for files-dir
-#RUN cd /teamspeak3 && mkdir files && ln -s /teamspeak3/files /opt/teamspeak3-server_linux-amd64/files
+# symlink for files-dir
+RUN mkdir /teamspeak3/files \ 
+  ln -s /teamspeak3/files /opt/teamspeak3-server_linux-amd64/files
 
 # TODO Use CMD to set some defaults, for example mapping some files/directorys to the injected volume.
 #CMD ["logpath='/teamspeak3/logs/'"]
