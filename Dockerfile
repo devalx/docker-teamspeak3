@@ -21,15 +21,13 @@ RUN apt-get update && apt-get install -y curl
 # Download TS3 file and extract it into /opt.
 RUN cd /opt && curl -sL ${TEAMSPEAK_URL} | tar xz
 
-# TODO Use CMD to set some defaults, for example mapping some files/directorys to the injected volume.
-#CMD ["logpath='/teamspeak3/logs/'"]
-# licensepath='/teamspeak3/' inifile='/teamspeak3/ts3server.ini' "]
-
 ENTRYPOINT /opt/teamspeak3-server_linux-amd64/ts3server_minimal_runscript.sh \
   query_ip_whitelist="/teamspeak3/query_ip_whitelist.txt" \
   query_ip_backlist="/teamspeak3/query_ip_blacklist.txt" \
   logpath="/teamspeak3/logs/" \
-  licensepath="/teamspeak3/"
+  licensepath="/teamspeak3/" \
+#  inifile="/teamspeak3/ts3server.ini" \
+#  createinifile=1 
   
 
 # Expose the Standard TS3 port.
