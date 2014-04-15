@@ -1,6 +1,6 @@
 #!/bin/bash
 
-VOLUME=/teamspeak3/
+VOLUME=/teamspeak3
 
 #-- ts 3 starten im hintergrund
 #-- den erstellten files ordner symlinken
