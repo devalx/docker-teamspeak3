@@ -15,12 +15,10 @@ ENV TEAMSPEAK_URL http://dl.4players.de/ts/releases/3.0.10.3/teamspeak3-server_l
 # Inject a Volume for any TS3-Data that needs to be persisted or to be accessible from the host. (e.g. for Backups)
 VOLUME ["/teamspeak3"]
 
-# Update app-get index and install curl to download TS3 file.
-#RUN apt-get update && apt-get install -y curl
-
 # Download TS3 file and extract it into /opt.
 ADD ${TEAMSPEAK_URL} /opt/
 RUN cd /opt && tar -xzf /opt/teamspeak3-server_linux-amd64-3.0.10.3.tar.gz
+
 ADD /scripts/ /opt/scripts/
 RUN chmod -R 774 /opt/scripts/
 
