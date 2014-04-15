@@ -19,8 +19,8 @@ VOLUME ["/teamspeak3"]
 #RUN apt-get update && apt-get install -y curl
 
 # Download TS3 file and extract it into /opt.
-#RUN cd /opt && curl -sL ${TEAMSPEAK_URL} | tar xz
 ADD ${TEAMSPEAK_URL} /opt/
+RUN tar -xzf teamspeak3-server_linux-amd64-3.0.10.3.tar.gz
 ADD /scripts/ /opt/scripts/
 RUN chmod -R 774 /opt/scripts/
 
