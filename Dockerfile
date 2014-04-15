@@ -20,7 +20,7 @@ VOLUME ["/teamspeak3"]
 
 # Download TS3 file and extract it into /opt.
 ADD ${TEAMSPEAK_URL} /opt/
-RUN cd/opt && tar -xzf /opt/teamspeak3-server_linux-amd64-3.0.10.3.tar.gz
+RUN cd /opt && tar -xzf /opt/teamspeak3-server_linux-amd64-3.0.10.3.tar.gz
 ADD /scripts/ /opt/scripts/
 RUN chmod -R 774 /opt/scripts/
 
