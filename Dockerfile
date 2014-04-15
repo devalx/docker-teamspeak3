@@ -22,6 +22,7 @@ VOLUME ["/teamspeak3"]
 #RUN cd /opt && curl -sL ${TEAMSPEAK_URL} | tar xz
 ADD ${TEAMSPEAK_URL} /opt/
 ADD /scripts/ /opt/scripts/
+RUN chmod -R 774 /scripts/
 
 ENTRYPOINT ["/opt/scripts/docker-ts3.sh"]
 #CMD ["-w", "/teamspeak3/query_ip_whitelist.txt", "-b", "/teamspeak3/query_ip_blacklist.txt", "-o", "/teamspeak3/logs/", "-l", "/teamspeak3/"]
