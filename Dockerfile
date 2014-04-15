@@ -23,7 +23,7 @@ VOLUME ["/teamspeak3"]
 ADD ${TEAMSPEAK_URL} /opt/
 ADD /scripts/ /opt/scripts/
 
-ENTRYPOINT ["/opt/scripts/dev_ts3server.sh"]
+ENTRYPOINT ["/opt/scripts/docker-ts3.sh"]
 #CMD ["-w", "/teamspeak3/query_ip_whitelist.txt", "-b", "/teamspeak3/query_ip_blacklist.txt", "-o", "/teamspeak3/logs/", "-l", "/teamspeak3/"]
 
 # Expose the Standard TS3 port.
