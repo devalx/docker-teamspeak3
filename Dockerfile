@@ -16,19 +16,15 @@ ENV TEAMSPEAK_URL http://dl.4players.de/ts/releases/3.0.10.3/teamspeak3-server_l
 VOLUME ["/teamspeak3"]
 
 # Update app-get index and install curl to download TS3 file.
-RUN apt-get update && apt-get install -y curl
+#RUN apt-get update && apt-get install -y curl
 
 # Download TS3 file and extract it into /opt.
-RUN cd /opt && curl -sL ${TEAMSPEAK_URL} | tar xz
+#RUN cd /opt && curl -sL ${TEAMSPEAK_URL} | tar xz
+ADD ${TEAMSPEAK_URL} /opt/
+ADD /scripts/ /opt/scripts/
 
-ENTRYPOINT /opt/teamspeak3-server_linux-amd64/ts3server_minimal_runscript.sh \
-  query_ip_whitelist="/teamspeak3/query_ip_whitelist.txt" \
-  query_ip_backlist="/teamspeak3/query_ip_blacklist.txt" \
-  logpath="/teamspeak3/logs/" \
-  licensepath="/teamspeak3/" 
-#  inifile="/teamspeak3/ts3server.ini" \
-#  createinifile=1 
-  
+ENTRYPOINT ["/opt/scripts/dev_ts3server"]
+#CMD ["-w", "/teamspeak3/query_ip_whitelist.txt", "-b", "/teamspeak3/query_ip_blacklist.txt", "-o", "/teamspeak3/logs/", "-l", "/teamspeak3/"]
 
 # Expose the Standard TS3 port.
 EXPOSE 9987/udp
