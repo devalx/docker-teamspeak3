@@ -27,3 +27,7 @@ ENTRYPOINT ["/opt/scripts/docker-ts3.sh"]
 
 # Expose the Standard TS3 port.
 EXPOSE 9987/udp
+# for files
+EXPOSE 30033 
+# for ServerQuery
+EXPOSE 10011
