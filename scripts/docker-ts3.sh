@@ -8,11 +8,13 @@ if [ -f $VOLUME/ts3server.sqlitedb ]
     echo "$VOLUME/ts3server.sqlitedb found. Creating Link between host-mounted db-file and ts3-folder."
 	ln -s $VOLUME/ts3server.sqlitedb /opt/teamspeak3-server_linux-amd64/ts3server.sqlitedb 
 fi
+
 echo "2. Link the files-folder into the host-mounted volume."
 mkdir -p /teamspeak3/files
-rm -rf /opt/teamspeak3-server_linux-amd64/files
-ln -s /teamspeak3/files /opt/teamspeak3-server_linux-amd64/files
-
+if ! [ -L /opt/teamspeak3-server_linux-amd64/files ]; then
+  rm -rf /opt/teamspeak3-server_linux-amd64/files
+  ln -s /teamspeak3/files /opt/teamspeak3-server_linux-amd64/files
+fi
 
 echo "3. Starting TS3-Server."
 echo "Check if ts3server.ini exists in host-mounted volume."
