@@ -22,6 +22,9 @@ RUN chmod -R 774 /opt/scripts/
 ADD ${TEAMSPEAK_URL} /opt/
 RUN cd /opt && tar -xzf /opt/teamspeak3-server_linux-amd64-3*.tar.gz
 
+# Copy libmariadb.so.2 to server main folder
+RUN cp /opt/teamspeak3-server_linux-amd64/redist/libmariadb.so.2 /opt/teamspeak3-server_linux-amd64/
+
 ENTRYPOINT ["/opt/scripts/docker-ts3.sh"]
 #CMD ["-w", "/teamspeak3/query_ip_whitelist.txt", "-b", "/teamspeak3/query_ip_blacklist.txt", "-o", "/teamspeak3/logs/", "-l", "/teamspeak3/"]
 
