@@ -11,7 +11,7 @@ RUN apt-get update -q \
 
 ADD ${TEAMSPEAK_URL} /home/ts3/
 
-RUN useradd -ms /bin/bash ts3 \
+RUN useradd ts3 \
   && tar --directory /home/ts3 -xjf /home/ts3/teamspeak3-server_linux_amd64-3*.tar.bz2 \
   && mkdir -p /data/ts3/logs \
   && mkdir -p /data/ts3/files \
