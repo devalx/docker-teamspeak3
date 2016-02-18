@@ -14,39 +14,25 @@ Ubuntu with TS3 Server.
   * licence (Maybe; Dont have one)
   * ts3server.ini (Not tested)
 
-#### Usage
-  * Infos
-  
-	The script does look for an sqlite db in the linked host-folder. 
-	If its found, a symlink is created to the ts3-folder inside the container. 
-	This means the server should use your old ts3 db if present. 
-	If not present it will create a new one, right now this will NOT be created under the linked host-folder!
-	The problem here is i cant tell the TS3 server to create the db in specific folder.
-	Creating a empty file and then linking this did not work either since TS3 is then complaining its no sqlite db.
-	
-	Script will also look for ts3server.ini in linked host-folder. This file will also be created if its not 
-	found since TS3-server has a paramater for that. If you use your own ini-file you may want to link logs and other data to /teamspeak3.
-	This way you can mount the directory and backup/persist the data even when upgrading.
-	
-	The files-directory is also currently not persisted in the linked host-folder.
+#### Update Notice
+I made bigger updates to the Dockerfile to simplify and streamline the whole process. Please read the following infos carefully!
 
-  * Build container (optional)
-  
-	Just in case you dont wanna use the index.
-	
-    `sudo docker build https://github.com/devalx/docker-teamspeak3.git` 
-  
-  
-  * Create container
-    
-    This creates and starts a docker container in the 
-    background (-d) with 
-    direct mapping of the TS3 port (-p 9987:9987/udp)
-    and sets the name to TS3.
-    {FOLDER} is an absolute path on the host to be mapped by the containers /teamspeak3 folder.
-    Injected files are used from this location, see Summary above.
+#### Usage v2
+I strongly recommend to use a data-container or the new 'docker volume' command in conjunction with this TS3-Container, but its obviously up to you.
 
-    `docker run --name TS3 -d -p 9987:9987/udp -p 30033:30033 -p 10011:10011 -v {FOLDER}:/teamspeak3 devalx/docker-teamspeak3:latest` 
+##### data container
+	`# create the data container`
+	`docker run --name=ts3-data --entrypoint /bin/true devalx/docker-teamspeak3:beta`
+	`# Now start the actual TS3-Server`
+	`docker run --name=ts3 -d --volumes-from ts3-data -p 9987:9987/udp -p 30033:30033 -p 10011:10011 devalx/docker-teamspeak3:beta`
+
+##### docker volume create (Since docker-engine 1.9)
+	`docker volume create --name ts3-data`
+	`docker run --name=ts3 -p 9987:9987/udp -p 30033:30033 -p 10011:10011 -v ts3-data:/data devalx/docker-teamspeak3:beta`
+	
+##### -v 
+ 	`docker run --name TS3 -d -p 9987:9987/udp -p 30033:30033 -p 10011:10011 -v {FOLDER}:/teamspeak3 devalx/docker-teamspeak3:beta` 
+   
     
   * Admin Secret
   
