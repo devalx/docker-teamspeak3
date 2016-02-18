@@ -1,33 +1,29 @@
-###############################################
-# Ubuntu with added Teamspeak 3 Server. 
-# Uses SQLite Database on default.
-###############################################
+FROM ubuntu:15.10
 
-# Using latest Ubuntu image as base
-FROM ubuntu
+MAINTAINER alex.devalx@gmail.com
 
-MAINTAINER Alex
+ENV TEAMSPEAK_URL http://dl.4players.de/ts/releases/3.0.12.2/teamspeak3-server_linux_amd64-3.0.12.2.tar.bz2
 
-## Set some variables for override.
-# Download Link of TS3 Server
-ENV TEAMSPEAK_URL http://dl.4players.de/ts/releases/3.0.11.3/teamspeak3-server_linux-amd64-3.0.11.3.tar.gz
+RUN apt-get update -q \
+  && DEBIAN_FRONTEND=noninteractive apt-get install -qy bzip2 \
+  && apt-get clean \
+  && rm -rf /var/lib/apt
 
-# Inject a Volume for any TS3-Data that needs to be persisted or to be accessible from the host. (e.g. for Backups)
-VOLUME ["/teamspeak3"]
+ADD ${TEAMSPEAK_URL} /home/ts3/
 
-ADD /scripts/ /opt/scripts/
-RUN chmod -R 774 /opt/scripts/
+RUN useradd -ms /bin/bash ts3 \
+  && tar -xjf --directory /home/ts3 /home/ts3/teamspeak3-server_linux_amd64-3*.tar.bz2 \
+  && mkdir -p /data/ts3/logs \
+  && mkdir -p /data/ts3/files \
+  && chown -R ts3 /data \
+  && ln -s /data/ts3/ts3server.sqlitedb /home/ts3/teamspeak3-server_linux_amd64/ts3server.sqlitedb
+# Symlink because i dont know how to move sqlite-db (like dbpath=/data/ts/mysqlite.db)
 
-# Download TS3 file and extract it into /opt.
-ADD ${TEAMSPEAK_URL} /opt/
-RUN cd /opt && tar -xzf /opt/teamspeak3-server_linux-amd64-3*.tar.gz
+USER ts3
+ENTRYPOINT ["/home/ts3/teamspeak3-server_linux_amd64/ts3server_minimal_runscript.sh"]
+CMD ["inifile=/data/ts3/ts3server.ini", "logpath=/data/ts3/logs","licensepath=/data/ts3/","query_ip_whitelist=/data/ts3/query_ip_whitelist.txt","query_ip_backlist=/data/ts3/query_ip_bl$
 
-ENTRYPOINT ["/opt/scripts/docker-ts3.sh"]
-#CMD ["-w", "/teamspeak3/query_ip_whitelist.txt", "-b", "/teamspeak3/query_ip_blacklist.txt", "-o", "/teamspeak3/logs/", "-l", "/teamspeak3/"]
+VOLUME ["/data/ts3"]
 
-# Expose the Standard TS3 port.
-EXPOSE 9987/udp
-# for files
-EXPOSE 30033 
-# for ServerQuery
-EXPOSE 10011
+# Expose the Standard TS3 port, for files, for serverquery
+EXPOSE 9987/udp 30033 10011
