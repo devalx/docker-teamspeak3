@@ -3,7 +3,7 @@ FROM ubuntu:15.10
 MAINTAINER alex.devalx@gmail.com
 
 ENV TEAMSPEAK_URL http://dl.4players.de/ts/releases/3.0.12.2/teamspeak3-server_linux_amd64-3.0.12.2.tar.bz2
-
+ENV TS3_UID 1000
 RUN apt-get update -q \
   && DEBIAN_FRONTEND=noninteractive apt-get install -qy bzip2 \
   && apt-get clean \
@@ -11,7 +11,7 @@ RUN apt-get update -q \
 
 ADD ${TEAMSPEAK_URL} /home/ts3/
 
-RUN useradd ts3 \
+RUN useradd -u ${TS3_UID} ts3 \
   && tar --directory /home/ts3 -xjf /home/ts3/teamspeak3-server_linux_amd64-3*.tar.bz2 \
   && mkdir -p /data/ts3/logs \
   && mkdir -p /data/ts3/files \
