@@ -21,7 +21,7 @@ RUN useradd -ms /bin/bash ts3 \
 
 USER ts3
 ENTRYPOINT ["/home/ts3/teamspeak3-server_linux_amd64/ts3server_minimal_runscript.sh"]
-CMD ["inifile=/data/ts3/ts3server.ini", "logpath=/data/ts3/logs","licensepath=/data/ts3/","query_ip_whitelist=/data/ts3/query_ip_whitelist.txt","query_ip_backlist=/data/ts3/query_ip_bl$
+CMD ["inifile=/data/ts3/ts3server.ini", "logpath=/data/ts3/logs","licensepath=/data/ts3/","query_ip_whitelist=/data/ts3/query_ip_whitelist.txt","query_ip_backlist=/data/ts3/query_ip_blacklist.txt"]
 
 VOLUME ["/data/ts3"]
 
