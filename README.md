@@ -54,3 +54,10 @@ After starting the container you probably want to get the Admin secret with:
 ### Upgrading
 Just stop and remove the old container, then start again at "Creating container". You may have to pull the image again       if its not updating.
 CAUTION: Didnt test if all files are really persisted or if the TS3 process overwrites some files. So make sure you have a backup. 
+
+### SELinux
+If your host uses SELinux it may be necessary to use the **:z** option:
+```
+docker run --name ts3 -d -p 9987:9987/udp -p 30033:30033 -p 10011:10011 -v /data/teamspeak:/home/ts3/data:z devalx/docker-teamspeak3:latest
+```
+Also see issue [#6](../../issues/6)
