@@ -16,8 +16,9 @@ RUN apt-get update -q \
   && rm /home/ts3/teamspeak3-server_linux_amd64.tar.bz2 \
   && mkdir -p /home/ts3/data/logs \
   && mkdir -p /home/ts3/data/files \
-  && chown -R ts3 /home/ts3 \
-  && ln -s /home/ts3/data/ts3server.sqlitedb /home/ts3/teamspeak3-server_linux_amd64/ts3server.sqlitedb
+  && ln -s /home/ts3/data/files /home/ts3/teamspeak3-server_linux_amd64/files \
+  && ln -s /home/ts3/data/ts3server.sqlitedb /home/ts3/teamspeak3-server_linux_amd64/ts3server.sqlitedb \
+  && chown -R ts3 /home/ts3 
 # Symlink because i dont know how to move sqlite-db (like dbpath=/data/ts/mysqlite.db)
 
 USER ts3
