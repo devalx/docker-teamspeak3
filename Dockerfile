@@ -1,33 +1,29 @@
-###############################################
-# Ubuntu with added Teamspeak 3 Server. 
-# Uses SQLite Database on default.
-###############################################
+FROM ubuntu:15.10
 
-# Using latest Ubuntu image as base
-FROM ubuntu
+MAINTAINER alex.devalx@gmail.com
 
-MAINTAINER Alex
+ENV TEAMSPEAK_URL http://dl.4players.de/ts/releases/3.0.12.2/teamspeak3-server_linux_amd64-3.0.12.2.tar.bz2
+ENV TS3_UID 1000
 
-## Set some variables for override.
-# Download Link of TS3 Server
-ENV TEAMSPEAK_URL http://dl.4players.de/ts/releases/3.0.11.3/teamspeak3-server_linux-amd64-3.0.11.3.tar.gz
+RUN apt-get update -q \
+  && DEBIAN_FRONTEND=noninteractive apt-get install -qy bzip2 wget \
+  && apt-get clean \
+  && rm -rf /var/lib/apt
+  && useradd -u ${TS3_UID} ts3 \
+  && wget -O /home/ts3/teamspeak3-server_linux_amd64.tar.bz2 ${TEAMSPEAK_URL} \
+  && tar --directory /home/ts3 -xjf /home/ts3/teamspeak3-server_linux_amd64-3*.tar.bz2 \
+  && rm teamspeak3-server_linux_amd64.tar.gz \
+  && mkdir -p /home/ts3/data/logs \
+  && mkdir -p /home/ts3/data/files \
+  && chown -R ts3 /home/ts3 \
+  && ln -s /home/ts3/data/ts3server.sqlitedb /home/ts3/teamspeak3-server_linux_amd64/ts3server.sqlitedb
+# Symlink because i dont know how to move sqlite-db (like dbpath=/data/ts/mysqlite.db)
 
-# Inject a Volume for any TS3-Data that needs to be persisted or to be accessible from the host. (e.g. for Backups)
-VOLUME ["/teamspeak3"]
+USER ts3
+ENTRYPOINT ["/home/ts3/teamspeak3-server_linux_amd64/ts3server_minimal_runscript.sh"]
+CMD ["inifile=/home/ts3/data/ts3server.ini", "logpath=/home/ts3/data/logs","licensepath=/home/ts3/data/","query_ip_whitelist=/home/ts3/data/query_ip_whitelist.txt","query_ip_backlist=/home/ts3/data/query_ip_blacklist.txt"]
 
-ADD /scripts/ /opt/scripts/
-RUN chmod -R 774 /opt/scripts/
+VOLUME ["/home/ts3/data"]
 
-# Download TS3 file and extract it into /opt.
-ADD ${TEAMSPEAK_URL} /opt/
-RUN cd /opt && tar -xzf /opt/teamspeak3-server_linux-amd64-3*.tar.gz
-
-ENTRYPOINT ["/opt/scripts/docker-ts3.sh"]
-#CMD ["-w", "/teamspeak3/query_ip_whitelist.txt", "-b", "/teamspeak3/query_ip_blacklist.txt", "-o", "/teamspeak3/logs/", "-l", "/teamspeak3/"]
-
-# Expose the Standard TS3 port.
-EXPOSE 9987/udp
-# for files
-EXPOSE 30033 
-# for ServerQuery
-EXPOSE 10011
+# Expose the Standard TS3 port, for files, for serverquery
+EXPOSE 9987/udp 30033 10011
