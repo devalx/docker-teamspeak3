@@ -21,17 +21,24 @@ I made bigger updates to the Dockerfile to simplify and streamline the whole pro
 I strongly recommend to use a data-container or the new 'docker volume' command in conjunction with this TS3-Container, but its obviously up to you.
 
 ##### data container
-	`# create the data container`
-	`docker run --name=ts3-data --entrypoint /bin/true devalx/docker-teamspeak3:beta`
-	`# Now start the actual TS3-Server`
-	`docker run --name=ts3 -d --volumes-from ts3-data -p 9987:9987/udp -p 30033:30033 -p 10011:10011 devalx/docker-teamspeak3:beta`
+
+```
+# create the data container
+docker run --name=ts3-data --entrypoint /bin/true devalx/docker-teamspeak3:beta
+# Now start the actual TS3-Server
+docker run --name=ts3 -d --volumes-from ts3-data -p 9987:9987/udp -p 30033:30033 -p 10011:10011devalx/docker-teamspeak3:beta
+```
 
 ##### docker volume create (Since docker-engine 1.9)
-	`docker volume create --name ts3-data`
-	`docker run --name=ts3 -p 9987:9987/udp -p 30033:30033 -p 10011:10011 -v ts3-data:/data devalx/docker-teamspeak3:beta`
+```
+docker volume create --name ts3-data
+docker run --name=ts3 -p 9987:9987/udp -p 30033:30033 -p 10011:10011 -v ts3-data:/data devalx/docker-teamspeak3:beta
+```
 	
 ##### -v 
- 	`docker run --name TS3 -d -p 9987:9987/udp -p 30033:30033 -p 10011:10011 -v {FOLDER}:/teamspeak3 devalx/docker-teamspeak3:beta` 
+```
+docker run --name TS3 -d -p 9987:9987/udp -p 30033:30033 -p 10011:10011 -v {FOLDER}:/teamspeak3 devalx/docker-teamspeak3:beta
+```
    
     
   * Admin Secret
