@@ -1,10 +1,9 @@
-### docker-teamspeak3
+## docker-teamspeak3
 
 Ubuntu with TS3 Server.
 
-#### Summary
-* Ubuntu
-* Teamspeak 3 Server
+### Summary
+* Ubuntu + Teamspeak 3 Server
 * Some files can be injected to host:
   * query_ip_whitelist.txt
   * query_ip_blacklist.txt
@@ -14,39 +13,44 @@ Ubuntu with TS3 Server.
   * licence (Maybe; Dont have one)
   * ts3server.ini (Not tested)
 
-#### Update Notice
+### Update Notice
 I made bigger updates to the Dockerfile to simplify and streamline the whole process. Please read the following infos carefully!
+The old image used root to run the ts3-server and there all created files had root-permission. The new image uses a dedicated user (ts3) with a default UID of 1000 which can be overridden with an ENV-variable (TS3_UID). So in case you want to use old data you most probably need to chown the old files to the new user/uid.
+Also the volumes inside the container have changed, the strcture itself should be the same - so the docker run command will differ slightly from the old version.
 
-#### Usage v2
-I strongly recommend to use a data-container or the new 'docker volume' command in conjunction with this TS3-Container, but its obviously up to you.
+### Usage v2
+I recommend to use a data-container or the new 'docker volume' command in conjunction with this TS3-Container, but its obviously up to you.
 
-##### data container
+#### data container
 
 ```
 # create the data container
 docker run --name=ts3-data --entrypoint /bin/true devalx/docker-teamspeak3:beta
 # Now start the actual TS3-Server
-docker run --name=ts3 -d --volumes-from ts3-data -p 9987:9987/udp -p 30033:30033 -p 10011:10011devalx/docker-teamspeak3:beta
+docker run --name=ts3 -d --volumes-from ts3-data -p 9987:9987/udp -p 30033:30033 -p 10011:10011 devalx/docker-teamspeak3:beta
 ```
 
-##### docker volume create (Since docker-engine 1.9)
+The data-container does not need to be running for this to work.
+
+#### docker volume create (Since docker-engine 1.9)
 ```
 docker volume create --name ts3-data
-docker run --name=ts3 -p 9987:9987/udp -p 30033:30033 -p 10011:10011 -v ts3-data:/data devalx/docker-teamspeak3:beta
+docker run --name=ts3 -p 9987:9987/udp -p 30033:30033 -p 10011:10011 -v ts3-data:/home/ts3/data devalx/docker-teamspeak3:beta
 ```
 	
-##### -v 
+#### Mounted Host-directory
 ```
-docker run --name TS3 -d -p 9987:9987/udp -p 30033:30033 -p 10011:10011 -v {FOLDER}:/teamspeak3 devalx/docker-teamspeak3:beta
+docker run --name ts3 -d -p 9987:9987/udp -p 30033:30033 -p 10011:10011 -v {FOLDER}:/home/ts3/data devalx/docker-teamspeak3:beta
 ```
-   
+
+#### MariaDB
+
+This is still WIP.
     
-  * Admin Secret
-  
-    After starting the container you probably want to get the Admin secret with:
-    `sudo docker logs TS3` 
+### Admin Secret
+After starting the container you probably want to get the Admin secret with:
+`sudo docker logs TS3` 
     
-  * Upgrading
-  
-    Just stop and remove the old container, then start again at "Creating container". You may have to pull the image again       if its not updating.
-    CAUTION: Didnt test if all files are really persisted or if the TS3 process overwrites some files. So make sure you have a backup. 
+### Upgrading
+Just stop and remove the old container, then start again at "Creating container". You may have to pull the image again       if its not updating.
+CAUTION: Didnt test if all files are really persisted or if the TS3 process overwrites some files. So make sure you have a backup. 
