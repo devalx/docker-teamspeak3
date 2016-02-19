@@ -8,7 +8,7 @@ ENV TS3_UID 1000
 RUN apt-get update -q \
   && DEBIAN_FRONTEND=noninteractive apt-get install -qy bzip2 wget \
   && apt-get clean \
-  && rm -rf /var/lib/apt
+  && rm -rf /var/lib/apt \
   && useradd -u ${TS3_UID} ts3 \
   && wget -O /home/ts3/teamspeak3-server_linux_amd64.tar.bz2 ${TEAMSPEAK_URL} \
   && tar --directory /home/ts3 -xjf /home/ts3/teamspeak3-server_linux_amd64-3*.tar.bz2 \
