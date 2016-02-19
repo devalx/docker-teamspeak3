@@ -16,6 +16,7 @@ RUN apt-get update -q \
   && rm /home/ts3/teamspeak3-server_linux_amd64.tar.bz2 \
   && mkdir -p /home/ts3/data/logs \
   && mkdir -p /home/ts3/data/files \
+  && mkdir -p /home/ts3/teamspeak3-server_linux_amd64/files \
   && ln -s /home/ts3/data/files/ /home/ts3/teamspeak3-server_linux_amd64/files/ \
   && ln -s /home/ts3/data/ts3server.sqlitedb /home/ts3/teamspeak3-server_linux_amd64/ts3server.sqlitedb \
   && chown -R ts3 /home/ts3 
