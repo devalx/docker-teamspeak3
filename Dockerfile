@@ -2,7 +2,7 @@ FROM ubuntu:15.10
 
 MAINTAINER alex.devalx@gmail.com
 
-ENV TEAMSPEAK_URL http://dl.4players.de/ts/releases/3.0.12.2/teamspeak3-server_linux_amd64-3.0.12.2.tar.bz2
+ENV TEAMSPEAK_URL http://dl.4players.de/ts/releases/3.0.12.4/teamspeak3-server_linux_amd64-3.0.12.4.tar.bz2
 ENV TS3_UID 1000
 
 RUN apt-get update -q \
