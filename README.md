@@ -19,7 +19,13 @@ The old image used root to run the ts3-server and there all created files had ro
 Also the volumes inside the container have changed, the strcture itself should be the same - so the docker run command will differ slightly from the old version.
 
 ### Usage v2
-I recommend to use a data-container or the new 'docker volume' command in conjunction with this TS3-Container, but its obviously up to you.
+I recommend to use the new 'docker volume' command in conjunction with this TS3-Container, but its obviously up to you.
+
+#### docker volume create (Since docker-engine 1.9 - RECOMMENDED) 
+```
+docker volume create --name ts3-data
+docker run --name=ts3 -p 9987:9987/udp -p 30033:30033 -p 10011:10011 -v ts3-data:/home/ts3/data devalx/docker-teamspeak3:latest
+```
 
 #### data container
 
@@ -32,16 +38,18 @@ docker run --name=ts3 -d --volumes-from ts3-data -p 9987:9987/udp -p 30033:30033
 
 The data-container does not need to be running for this to work.
 
-#### docker volume create (Since docker-engine 1.9)
-```
-docker volume create --name ts3-data
-docker run --name=ts3 -p 9987:9987/udp -p 30033:30033 -p 10011:10011 -v ts3-data:/home/ts3/data devalx/docker-teamspeak3:latest
-```
-	
 #### Mounted Host-directory
 ```
 docker run --name ts3 -d -p 9987:9987/udp -p 30033:30033 -p 10011:10011 -v {FOLDER}:/home/ts3/data devalx/docker-teamspeak3:latest
 ```
+
+If you experience permission problems, especially after an upgrade, you can use the TS3_UID-env to set the user for the teamspeak-server process (inside the container). When using an mounted host-directory, the owner of the files will be the UID of this internal user (default is 1000)
+
+```
+docker run --name ts3 -d -p -e TS3_UID=1001 9987:9987/udp -p 30033:30033 -p 10011:10011 -v {FOLDER}:/home/ts3/data devalx/docker-teamspeak3:latest
+```
+This would change the internal user to an UID of 1001.  
+
 
 #### MariaDB
 
