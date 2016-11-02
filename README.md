@@ -68,4 +68,4 @@ If your host uses SELinux it may be necessary to use the **:z** option:
 ```
 docker run --name ts3 -d -p 9987:9987/udp -p 30033:30033 -p 10011:10011 -v /data/teamspeak:/home/ts3/data:z devalx/docker-teamspeak3:latest
 ```
-Also see issue [devalx/docker-teamspeak3#6]
+Also see issue [https://github.com/devalx/docker-teamspeak3/issues/6]
