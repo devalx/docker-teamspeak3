@@ -1,9 +1,9 @@
 ## docker-teamspeak3
 
-Ubuntu with TS3 Server.
+Alpine+glibc with TS3 Server.
 
 ### Summary
-* Ubuntu + Teamspeak 3 Server
+* Alpine+glibc + Teamspeak 3 Server
 * Some files can be injected to host:
   * query_ip_whitelist.txt
   * query_ip_blacklist.txt
