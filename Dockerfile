@@ -1,15 +1,11 @@
-FROM ubuntu:16.04
+FROM frolvlad/alpine-glibc:alpine-3.4
 
-MAINTAINER alex.devalx@gmail.com
+MAINTAINER BastiOfBerlin
 
 ENV TEAMSPEAK_URL http://dl.4players.de/ts/releases/3.0.13.4/teamspeak3-server_linux_amd64-3.0.13.4.tar.bz2
 ENV TS3_UID 1000
 
-RUN apt-get update -q \
-  && DEBIAN_FRONTEND=noninteractive apt-get install -qy bzip2 wget \
-  && apt-get clean \
-  && rm -rf /var/lib/apt \
-  && useradd -u ${TS3_UID} ts3 \
+RUN adduser -S -D -u ${TS3_UID} ts3 \
   && mkdir -p /home/ts3 \
   && wget -q -O /home/ts3/teamspeak3-server_linux_amd64.tar.bz2 ${TEAMSPEAK_URL} \
   && tar --directory /home/ts3 -xjf /home/ts3/teamspeak3-server_linux_amd64.tar.bz2 \
