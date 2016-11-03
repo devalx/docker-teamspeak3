@@ -24,16 +24,16 @@ I recommend to use the new 'docker volume' command in conjunction with this TS3-
 #### docker volume create (Since docker-engine 1.9 - RECOMMENDED) 
 ```
 docker volume create --name ts3-data
-docker run --name=ts3 -p 9987:9987/udp -p 30033:30033 -p 10011:10011 -v ts3-data:/home/ts3/data devalx/docker-teamspeak3:latest
+docker run --name=ts3 -p 9987:9987/udp -p 30033:30033 -p 10011:10011 -v ts3-data:/home/ts3/data bastiofberlin/docker-teamspeak3:latest
 ```
 
 #### data container
 
 ```
 # create the data container
-docker run --name=ts3-data --entrypoint /bin/true devalx/docker-teamspeak3:latest
+docker run --name=ts3-data --entrypoint /bin/true bastiofberlin/docker-teamspeak3:latest
 # Now start the actual TS3-Server
-docker run --name=ts3 -d --volumes-from ts3-data -p 9987:9987/udp -p 30033:30033 -p 10011:10011 devalx/docker-teamspeak3:latest
+docker run --name=ts3 -d --volumes-from ts3-data -p 9987:9987/udp -p 30033:30033 -p 10011:10011 bastiofberlin/docker-teamspeak3:latest
 ```
 
 The data-container does not need to be running for this to work.
@@ -46,7 +46,7 @@ docker run --name ts3 -d -p 9987:9987/udp -p 30033:30033 -p 10011:10011 -v {FOLD
 If you experience permission problems, especially after an upgrade, you can use the TS3_UID-env to set the user for the teamspeak-server process (inside the container). When using an mounted host-directory, the owner of the files will be the UID of this internal user (default is 1000)
 
 ```
-docker run --name ts3 -d -p -e TS3_UID=1001 9987:9987/udp -p 30033:30033 -p 10011:10011 -v {FOLDER}:/home/ts3/data devalx/docker-teamspeak3:latest
+docker run --name ts3 -d -p -e TS3_UID=1001 9987:9987/udp -p 30033:30033 -p 10011:10011 -v {FOLDER}:/home/ts3/data bastiofberlin/docker-teamspeak3:latest
 ```
 This would change the internal user to an UID of 1001.  
 
@@ -60,12 +60,12 @@ After starting the container you probably want to get the Admin secret with:
 `sudo docker logs ts3` 
     
 ### Upgrading
-Just stop and remove the old container, then start again at "Creating container". You may have to pull the image again       if its not updating.
+Just stop and remove the old container, then start again at "Creating container". You may have to pull the image again if its not updating.
 CAUTION: Didnt test if all files are really persisted or if the TS3 process overwrites some files. So make sure you have a backup. 
 
 ### SELinux
 If your host uses SELinux it may be necessary to use the **:z** option:
 ```
-docker run --name ts3 -d -p 9987:9987/udp -p 30033:30033 -p 10011:10011 -v /data/teamspeak:/home/ts3/data:z devalx/docker-teamspeak3:latest
+docker run --name ts3 -d -p 9987:9987/udp -p 30033:30033 -p 10011:10011 -v /data/teamspeak:/home/ts3/data:z bastiofberlin/docker-teamspeak3:latest
 ```
 Also see issue [devalx/docker-teamspeak3#6](https://github.com/devalx/docker-teamspeak3/issues/6)
