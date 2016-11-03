@@ -2,6 +2,8 @@
 
 Ubuntu with TS3 Server.
 
+[![](https://images.microbadger.com/badges/image/devalx/docker-teamspeak3.svg)](https://microbadger.com/images/devalx/docker-teamspeak3 "Get your own image badge on microbadger.com")
+
 ### Summary
 * Ubuntu + Teamspeak 3 Server
 * Some files can be injected to host:
