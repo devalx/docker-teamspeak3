@@ -1,3 +1,5 @@
+[![](https://images.microbadger.com/badges/image/bastiofberlin/docker-teamspeak3.svg)](https://microbadger.com/images/bastiofberlin/docker-teamspeak3 "Get your own image badge on microbadger.com") [![](https://images.microbadger.com/badges/version/bastiofberlin/docker-teamspeak3.svg)](https://microbadger.com/images/bastiofberlin/docker-teamspeak3 "Get your own version badge on microbadger.com")
+
 ## docker-teamspeak3
 
 Alpine+glibc with TS3 Server.
