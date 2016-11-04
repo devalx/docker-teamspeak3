@@ -1,0 +1,14 @@
+version: '2'
+services:
+  ts3:
+    restart: always
+    image: bastiofberlin/docker-teamspeak3:latest
+    ports:
+      - 9987:9987/udp
+      - 30033:30033
+      - 10011:10011
+#    environment:
+    volumes:
+      - ts3-data:/home/ts3/data
+volumes:
+      ts3-data:
