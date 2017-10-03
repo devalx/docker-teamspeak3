@@ -1,10 +1,10 @@
 FROM ubuntu:16.04
 
-ENV TEAMSPEAK_URL http://dl.4players.de/ts/releases/3.0.13.6/teamspeak3-server_linux_amd64-3.0.13.6.tar.bz2
+ENV TEAMSPEAK_URL http://dl.4players.de/ts/releases/3.0.13.8/teamspeak3-server_linux_amd64-3.0.13.8.tar.bz2
 ENV TS3_UID 1000
 
 RUN apt-get update -q \
-  && DEBIAN_FRONTEND=noninteractive apt-get install -qy bzip2 wget \
+  && DEBIAN_FRONTEND=noninteractive apt-get install -qy bzip2 wget locales \
   && apt-get clean \
   && rm -rf /var/lib/apt \
   && useradd -u ${TS3_UID} ts3 \
@@ -16,8 +16,25 @@ RUN apt-get update -q \
   && mkdir -p /home/ts3/data/files \
  # && ln -s /home/ts3/data/files /home/ts3/teamspeak3-server_linux_amd64 \
   && ln -s /home/ts3/data/ts3server.sqlitedb /home/ts3/teamspeak3-server_linux_amd64/ts3server.sqlitedb \
-  && chown -R ts3 /home/ts3 
+  && chown -R ts3 /home/ts3 \
+  && sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen \
+  && locale-gen
 # Symlink because i dont know how to move sqlite-db (like dbpath=/data/ts/mysqlite.db)
+
+# Teamspeak 3 expects nowadays an UTF-8 encoding
+# Error is:
+#  WARNING |ServerLibPriv |   |The system locale is set to "C" this can cause unexpected behavior. We advice you to repair your locale!
+# and you'll get runtime errors like this:
+#  invalid utf8 string send to logging
+# 
+# 
+# Solution
+# Add locales to the docker environment, as suggested in stackoverflow:
+# https://stackoverflow.com/a/28406007
+
+ENV LANG en_US.UTF-8
+ENV LANGUAGE en_US:en
+ENV LC_ALL en_US.UTF-8
 
 USER ts3
 ENTRYPOINT ["/home/ts3/teamspeak3-server_linux_amd64/ts3server_minimal_runscript.sh"]
