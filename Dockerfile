@@ -1,4 +1,4 @@
-FROM frolvlad/alpine-glibc:alpine-3.5
+FROM frolvlad/alpine-glibc:alpine-3.7
 
 MAINTAINER BastiOfBerlin
 
