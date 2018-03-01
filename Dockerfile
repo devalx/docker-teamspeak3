@@ -2,7 +2,7 @@ FROM frolvlad/alpine-glibc:alpine-3.7
 
 MAINTAINER BastiOfBerlin
 
-ENV TEAMSPEAK_URL=http://dl.4players.de/ts/releases/3.1.0/teamspeak3-server_linux_amd64-3.1.0.tar.bz2 \
+ENV TEAMSPEAK_URL=http://dl.4players.de/ts/releases/3.1.1/teamspeak3-server_linux_amd64-3.1.1.tar.bz2 \
     TS3_UID=1000
 
 RUN adduser -S -D -u ${TS3_UID} ts3 \
