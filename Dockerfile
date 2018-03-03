@@ -1,8 +1,8 @@
 FROM ubuntu:16.04
 
-ENV TEAMSPEAK_URL http://dl.4players.de/ts/releases/3.0.13.8/teamspeak3-server_linux_amd64-3.0.13.8.tar.bz2
+ENV TEAMSPEAK_URL http://dl.4players.de/ts/releases/3.1.1/teamspeak3-server_linux_amd64-3.1.1.tar.bz2
 # For the sake of safty, update and validate this hash for each new release!
-ENV TEAMSPEAK_SHA256 460c771bf58c9a49b4be2c677652f21896b98a021d7fff286e59679b3f987a59
+ENV TEAMSPEAK_SHA256 c9403f7958e1bf1c5e5cf083641b1e02b06800158df543e09d9259c69181e873
 ENV TS3_UID 1000
 
 RUN apt-get update -q \
