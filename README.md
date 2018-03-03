@@ -26,7 +26,7 @@ I recommend to use the new 'docker volume' command in conjunction with this TS3-
 #### docker volume create (Since docker-engine 1.9 - RECOMMENDED) 
 ```
 docker volume create --name ts3-data
-docker run --name=ts3 -p 9987:9987/udp -p 30033:30033 -p 10011:10011 -v ts3-data:/home/ts3/data devalx/docker-teamspeak3:latest
+docker run --name=ts3 -p 9987:9987/udp -p 30033:30033 -p 10011:10011 -v ts3-data:/home/ts3/data akendo/docker-teamspeak3:latest
 ```
 
 #### data container
@@ -35,14 +35,14 @@ docker run --name=ts3 -p 9987:9987/udp -p 30033:30033 -p 10011:10011 -v ts3-data
 # create the data container
 docker run --name=ts3-data --entrypoint /bin/true devalx/docker-teamspeak3:latest
 # Now start the actual TS3-Server
-docker run --name=ts3 -d --volumes-from ts3-data -p 9987:9987/udp -p 30033:30033 -p 10011:10011 devalx/docker-teamspeak3:latest
+docker run --name=ts3 -d --volumes-from ts3-data -p 9987:9987/udp -p 30033:30033 -p 10011:10011 akendo/docker-teamspeak3:latest
 ```
 
 The data-container does not need to be running for this to work.
 
 #### Mounted Host-directory
 ```
-docker run --name ts3 -d -p 9987:9987/udp -p 30033:30033 -p 10011:10011 -v {FOLDER}:/home/ts3/data devalx/docker-teamspeak3:latest
+docker run --name ts3 -d -p 9987:9987/udp -p 30033:30033 -p 10011:10011 -v {FOLDER}:/home/ts3/data akendo/docker-teamspeak3:latest
 ```
 
 If you experience permission problems, especially after an upgrade, you can use the TS3_UID-env to set the user for the teamspeak-server process (inside the container). When using an mounted host-directory, the owner of the files will be the UID of this internal user (default is 1000)

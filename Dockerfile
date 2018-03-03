@@ -21,6 +21,7 @@ RUN apt-get update -q \
   && ln -s /home/ts3/data/ts3server.sqlitedb /home/ts3/teamspeak3-server_linux_amd64/ts3server.sqlitedb \
   && chown -R ts3 /home/ts3 \
   && sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen \
+  && touch /home/ts3/.ts3server_license_accepted \
   && locale-gen
 # Symlink because i dont know how to move sqlite-db (like dbpath=/data/ts/mysqlite.db)
 
