@@ -4,6 +4,29 @@ Ubuntu with TS3 Server.
 
 [![](https://images.microbadger.com/badges/image/devalx/docker-teamspeak3.svg)](https://microbadger.com/images/devalx/docker-teamspeak3 "Get your own image badge on microbadger.com")
 
+### IMPORTANT env-variable TS3SERVER_LICENSE
+Since a recent Temspeak Version its necessary to override the env-variable TS3SERVER_LICENSE with "accept", otherwise the server will just print an info about the licence not being accepted and WILL NOT START.
+The licence can be printed with "view", see following examples how to do it and make sure you read the licence and make an explicit decision to accept it.
+
+### Example docker-compose.yml as of 09.08.2018
+```
+version: "3.7"
+services:
+  server:
+    image: devalx/docker-teamspeak3:latest
+    environment:
+      - TS3SERVER_LICENSE=accept
+    ports:      
+      - 9987:9987/udp      
+      - 10011:10011
+      - 30033:30033
+    volumes:
+      - ts3-data:/home/ts3/data
+volumes:
+  ts3-data:
+   external: true
+```
+
 ### Summary
 * Ubuntu + Teamspeak 3 Server
 * Some files can be injected to host:
