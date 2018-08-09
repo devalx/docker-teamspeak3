@@ -9,6 +9,12 @@ Since a recent Temspeak Version its necessary to override the env-variable TS3SE
 The licence can be printed with "view", see following examples how to do it and make sure you read the licence and make an explicit decision to accept it.
 
 ### Example docker-compose.yml as of 09.08.2018
+
+First create volume to keep it after updates:
+```
+docker volume create ts3-data
+```
+
 ```
 version: "3.7"
 services:
