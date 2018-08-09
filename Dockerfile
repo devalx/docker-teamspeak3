@@ -1,7 +1,12 @@
-FROM ubuntu:16.04
+FROM ubuntu:18.04
 
-ENV TEAMSPEAK_URL http://dl.4players.de/ts/releases/3.0.13.6/teamspeak3-server_linux_amd64-3.0.13.6.tar.bz2
+ENV TEAMSPEAK_URL http://dl.4players.de/ts/releases/3.3.0/teamspeak3-server_linux_amd64-3.3.0.tar.bz2
 ENV TS3_UID 1000
+
+# IMPORTANT! Override TS3SERVER_LICENSE with "accept" to use the Teamspeak 3 server! You can print it with "view" to read
+
+ENV LANG C.UTF-8
+ENV LC_ALL C.UTF-8
 
 RUN apt-get update -q \
   && DEBIAN_FRONTEND=noninteractive apt-get install -qy bzip2 wget \
