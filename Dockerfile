@@ -1,9 +1,9 @@
 FROM ubuntu:18.04
 
 # For the sake of safty, update and validate this hash for each new release!
-ENV TEAMSPEAK_VERSION 3.9.1
+ENV TEAMSPEAK_VERSION 3.10.0
 ENV TEAMSPEAK_URL https://files.teamspeak-services.com/releases/server/$TEAMSPEAK_VERSION/teamspeak3-server_linux_amd64-$TEAMSPEAK_VERSION.tar.bz2
-ENV TEAMSPEAK_SHA256 0a0497d6a8e5f3f48e10db8f89875286d6aa3388f171f828cf5d426cf305f16f
+ENV TEAMSPEAK_SHA256 5d0ade1cc3802cae75cf2b1d22b14163154a0d1d77d5aded7e56c826d023d6dd
 ENV TS3_UID 1000
 
 RUN apt-get update -q \
