@@ -1,6 +1,6 @@
 FROM ubuntu:18.04
 
-ENV TEAMSPEAK_URL https://files.teamspeak-services.com/releases/server/3.11.0/teamspeak3-server_linux_amd64-3.11.0.tar.bz2
+ENV TEAMSPEAK_URL https://files.teamspeak-services.com/releases/server/3.13.3/teamspeak3-server_linux_amd64-3.13.3.tar.bz2
 ENV TS3_UID 1000
 
 # IMPORTANT! Override TS3SERVER_LICENSE with "accept" to use the Teamspeak 3 server! You can print it with "view" to read
